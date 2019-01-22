@@ -78,7 +78,20 @@ console.log(ticketPriceTotal);
 // Now that you have used .forEach(), .map(), .filter(), and .reduce().  I want you to think of potential problems you could solve given the data set and the 5k fun run theme.  Try to create and then solve 3 unique problems using one or many of the array methods listed above.
 
 // Problem 1
+const shirtOrders = runners.reduce((acc, { shirt_size }) => ({ ...acc, [shirt_size]: (acc[shirt_size] || 0) + 1 }), {})
+console.log(shirtOrders)
 
 // Problem 2
+const donationsByCompany = runners.reduce((acc, { company_name, donation }) => ({
+  ...acc, [company_name]: [...(acc[company_name] || []), donation]
+}), {})
+console.log(donationsByCompany) //?
 
 // Problem 3
+const donationsByShirtSize = runners.reduce((acc, { shirt_size, donation }) => ({
+  ...acc, [shirt_size]: [...(acc[shirt_size] || []), donation]
+}), {})
+const avgDonationByShirtSize = Object.entries(donationsByShirtSize).reduce((acc, [k, v]) => ({
+  ...acc, [k]: (v.reduce((acc, x) => x + acc) / v.length).toLocaleString("en", { style: "currency", currency: "USD" })
+}), {})
+console.log(avgDonationByShirtSize)
